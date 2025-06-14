@@ -1,0 +1,45 @@
+# ARQUIVOS GERADOS PELO BUILD
+/target/
+/build/
+
+# IDEs
+.idea/
+/*.iml
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Classes compiladas
+*.class
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+.settings/
+
+# Wrapper Maven (se existir)
+/.mvn/wrapper/maven-wrapper.jar
+# se usar Gradle
+/gradle/
+/gradlew
+/gradlew.bat
+/gradle-wrapper.jar
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de cobertura de teste
+jacoco.exec
+
+# Arquivos de dependências baixadas (IDE)
+/lib/
+/external-libs/
