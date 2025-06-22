@@ -1,6 +1,7 @@
 package br.com.senai.agenciaviagem.agenciaviagemapi.controller;
 
 import br.com.senai.agenciaviagem.agenciaviagemapi.model.Destino;
+import br.com.senai.agenciaviagem.agenciaviagemapi.model.Reserva;
 import br.com.senai.agenciaviagem.agenciaviagemapi.service.DestinoService;
 import br.com.senai.agenciaviagem.agenciaviagemapi.service.ReservaService;
 import org.springframework.http.HttpStatus;
@@ -46,7 +47,7 @@ public class DestinoController {
     public DetalhamentoDestinoResponse visualizar(@PathVariable Long id) {
         Destino dest = destinoService.buscaId(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi localizado o destino informado"));
-        List<br.com.senai.agenciaviagem.agenciaviagemapi.model.Reserva> reservas = reservaService.buscarDestinoId(id);
+        List<Reserva> reservas = reservaService.buscarDestinoId(id);
         return new DetalhamentoDestinoResponse(dest, reservas);
     }
 
@@ -75,13 +76,13 @@ public class DestinoController {
 
     @PostMapping("/{id}/reservas")
     @ResponseStatus(HttpStatus.CREATED)
-    public br.com.senai.agenciaviagem.agenciaviagemapi.model.Reserva criarReserva(
+    public Reserva criarReserva(
             @PathVariable Long id,
-            @RequestBody Reserva requisicao) {
+            @RequestBody RequisicaoReserva requisicao) {
 
         destinoService.buscaId(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi localizado o destino informado"));
-        br.com.senai.agenciaviagem.agenciaviagemapi.model.Reserva res = new br.com.senai.agenciaviagem.agenciaviagemapi.model.Reserva();
+        Reserva res = new Reserva();
         res.setNomeCliente(requisicao.getNomeCliente());
         res.setQuantidadePessoas(requisicao.getQuantidadePessoas());
         res.setDataViagem(LocalDate.parse(requisicao.getDataViagem()));
@@ -89,7 +90,7 @@ public class DestinoController {
     }
 
     @GetMapping("/{id}/reservas")
-    public List<br.com.senai.agenciaviagem.agenciaviagemapi.model.Reserva> listarReservas(@PathVariable Long id) {
+    public List<Reserva> listarReservas(@PathVariable Long id) {
         destinoService.buscaId(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi localizado o destino informado"));
         return reservaService.buscarDestinoId(id);
@@ -116,9 +117,9 @@ public class DestinoController {
         private String descricao;
         private double avaliacaoMedia;
         private int quantidadeAvaliacoes;
-        private List<br.com.senai.agenciaviagem.agenciaviagemapi.model.Reserva> reservas;
+        private List<Reserva> reservas;
 
-        public DetalhamentoDestinoResponse(Destino dest, List<br.com.senai.agenciaviagem.agenciaviagemapi.model.Reserva> reservas) {
+        public DetalhamentoDestinoResponse(Destino dest, List<Reserva> reservas) {
             this.id = dest.getId();
             this.nome = dest.getNome();
             this.local = dest.getLocal();
@@ -133,10 +134,10 @@ public class DestinoController {
         public String getDescricao() { return descricao; }
         public double getAvaliacaoMedia() { return avaliacaoMedia; }
         public int getQuantidadeAvaliacoes() { return quantidadeAvaliacoes; }
-        public List<br.com.senai.agenciaviagem.agenciaviagemapi.model.Reserva> getReservas() { return reservas; }
+        public List<Reserva> getReservas() { return reservas; }
     }
 
-    public static class Reserva {
+    public static class RequisicaoReserva {
         private String nomeCliente;
         private int quantidadePessoas;
         private String dataViagem;
